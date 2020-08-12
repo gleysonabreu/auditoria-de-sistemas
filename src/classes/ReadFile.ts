@@ -3,12 +3,10 @@ import path from 'path'
 
 class ReadFile {
 
-  private pathFile: string;
   private file: string;
 
   constructor(pathFile: string){ 
-    this.pathFile = pathFile;
-    this.file = fs.readFileSync(path.resolve(__dirname, '..', this.pathFile), 'utf8');
+    this.file = fs.readFileSync(path.resolve(__dirname, '..', pathFile), 'utf8');
   }
 
   readLines = async (search?: Array<string>) => {
