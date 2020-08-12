@@ -1,0 +1,19 @@
+{
+  "name": "auditoria-de-sistemas",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Gleyson Abreu <gleyson_datu@hotmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^14.0.27",
+    "@types/typescript": "^2.0.0",
+    "typescript": "^3.9.7"
+  },
+  "scripts": {
+    "dev": "tsnd --transpile-only --ignore-watch node_modules --respawn src/app.ts"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "ts-node-dev": "^1.0.0-pre.56"
+  }
+}
