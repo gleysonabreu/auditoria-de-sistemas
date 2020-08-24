@@ -1,8 +1,7 @@
-import ReadFile from '@classes/ReadFile';
+import File from '@classes/File';
 
 try {
-  const readFile = new ReadFile('text.txt');
-  readFile.readLines();
+  File.readLines('text.txts');
 } catch (error) {
-  console.error(error.message);
+  File.writeLines('error.txt', error.message);
 }

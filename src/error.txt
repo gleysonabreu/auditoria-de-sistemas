@@ -1,0 +1,1 @@
+ENOENT: no such file or directory, open 'C:\Users\gleys\projects\auditoria-de-sistemas\src\text.txts'
