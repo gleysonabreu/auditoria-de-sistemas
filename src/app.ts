@@ -1,7 +1,31 @@
-import File from '@classes/File';
+import fs from 'fs';
 
-try {
-  File.readLines('text.txts');
-} catch (error) {
-  File.writeLines('error.txt', error.message);
+const file = fs.readFileSync(__dirname + '/text.txt', 'utf8');
+const lines = file.split(/\r?\n/);
+const regras: number = Number(lines[0]);
+
+console.log(`Esse arquivo contém ${regras} regras`);
+
+for(let line: number = 1; line <= regras; line++){
+  console.log('--------------------------------------');
+  console.log(`Regra ${line}`);
+  lines[line].split(',').forEach((value: String, index: number, array: string[]) => {
+    switch(index){
+      case 0:
+        console.log(`IP Origem: ${value}`);
+        break;
+      case 1:
+        console.log(`IP Destino: ${value}`);
+        break;
+      case 2:
+        console.log(`Protocolo: ${value}`);
+        break; 
+      case 3: 
+        console.log(`Porta destino: ${value}`);
+        break;
+      case 4:
+        console.log(`Ação: ${value}`);
+        break;
+    };
+  });
 }
