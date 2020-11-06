@@ -1,31 +1,40 @@
-import fs from 'fs';
+import readline from 'readline-sync';
+import AddRules from './AddRules';
 
-const file = fs.readFileSync(__dirname + '/text.txt', 'utf8');
-const lines = file.split(/\r?\n/);
-const regras: number = Number(lines[0]);
+let next = 's';
+const actions = [
+  'Adicionar Regra',
+  'Deletar Regra',
+  'Atualizar Regra',
+  'Mudar posição da regra'
+];
+console.log('-----------------------------------------------');
+console.log('                CADASTRAR REGRAS               ');
+console.log('-----------------------------------------------');
+while(next === 's'){
+  const rules = new AddRules();
 
-console.log(`Esse arquivo contém ${regras} regras`);
+  const doWhat = readline.keyInSelect(actions, 'O que você quer fazer');
 
-for(let line: number = 1; line <= regras; line++){
-  console.log('--------------------------------------');
-  console.log(`Regra ${line}`);
-  lines[line].split(',').forEach((value: String, index: number, array: string[]) => {
-    switch(index){
-      case 0:
-        console.log(`IP Origem: ${value}`);
-        break;
-      case 1:
-        console.log(`IP Destino: ${value}`);
-        break;
-      case 2:
-        console.log(`Protocolo: ${value}`);
-        break; 
-      case 3: 
-        console.log(`Porta destino: ${value}`);
-        break;
-      case 4:
-        console.log(`Ação: ${value}`);
-        break;
-    };
-  });
+  switch(actions[doWhat]){
+    case actions[0]:
+      rules.setInformation();
+      break;
+    case actions[1]:
+      rules.deleteRule();
+      break;
+    case actions[2]:
+      rules.updateRule();
+      break;
+    case actions[3]:
+      rules.changePosition();
+      break;
+    default:
+      next = 'n';
+      continue;
+  }
+  next = readline.question('Você quer continuar? (S=sim, N=não): ').substr(0,1).toLowerCase();
 }
+console.log('-----------------------------------------------');
+console.log('             PROGRAMA FINALIZADO               ');
+
