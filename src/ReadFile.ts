@@ -4,8 +4,10 @@ class ReadFile {
   private file: string;
   private lines: string[];
 
-  constructor(){
-    this.file = fs.readFileSync(__dirname + '/text.txt', 'utf8');
+  constructor(pathFile: string) {
+    this.file = fs.readFileSync(pathFile, {
+      encoding: 'utf-8'
+    });
     this.lines = this.file.split(/\r?\n/);
   }
 

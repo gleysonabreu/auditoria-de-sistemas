@@ -1,15 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es5",                        
-    "module": "commonjs",                   
-    "allowJs": true,                     
-    "sourceMap": true,                   
-    "strict": true,                           
+    "target": "es5",
+    "module": "commonjs",
+    "allowJs": true,
+    "sourceMap": true,
+    "strict": true,
     "types": [
       "node"
-    ],                         
-    "esModuleInterop": true,                
-    "skipLibCheck": true,                   
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "./src/@types"
+    ],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
