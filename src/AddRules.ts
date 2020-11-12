@@ -2,7 +2,7 @@ import console from 'console';
 import readline from 'readline-sync';
 import xlsx, { WorkBook } from 'xlsx';
 
-interface ISheet {
+export interface ISheet {
   __EMPTY: string | number;
   IP: string;
   __EMPTY_1: string;
@@ -65,6 +65,13 @@ class AddRules {
     this.input('Ação');
 
     this.addRule();
+  }
+
+  public show = () => {
+    const ws = this.file.Sheets[this.file.SheetNames[0]];
+    const sheetToJson: ISheet[] = xlsx.utils.sheet_to_json(ws);
+
+    return sheetToJson;
   }
 
   private addRule = () => {

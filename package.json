@@ -15,7 +15,8 @@
   },
   "scripts": {
     "addRules": "tsnd -r tsconfig-paths/register --transpile-only --ignore-watch node_modules --respawn src/execAddRules.ts",
-    "readFile": "tsnd -r tsconfig-paths/register --transpile-only --ignore-watch node_modules --respawn src/execReadFile.ts"
+    "readFile": "tsnd -r tsconfig-paths/register --transpile-only --ignore-watch node_modules --respawn src/execReadFile.ts",
+    "rules": "tsnd -r tsconfig-paths/register --transpile-only --ignore-watch node_modules --respawn src/execRules.ts"
   },
   "dependencies": {
     "exceljs": "^4.2.0",

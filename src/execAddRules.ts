@@ -1,5 +1,6 @@
 import readline from 'readline-sync';
 import AddRules from './AddRules';
+import Rules from './Rules';
 
 let next = 's';
 const actions = [
@@ -12,7 +13,7 @@ console.log('-----------------------------------------------');
 console.log('                CADASTRAR REGRAS               ');
 console.log('-----------------------------------------------');
 while(next === 's'){
-  const rules = new AddRules();
+  const rules = new Rules('rules.txt');
 
   const doWhat = readline.keyInSelect(actions, 'O que você quer fazer');
 
