@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import { stringify } from 'querystring';
 import readline from 'readline-sync';
 
 class Rules {
@@ -89,13 +88,6 @@ class Rules {
       return;
     }
 
-    this.sourceIP = findOne[1];
-    this.destinationIP = findOne[2];
-    this.protocol = findOne[3];
-    this.originPort =findOne[4];
-    this.destinationPort =findOne[5];
-    this.action = findOne[6];
-
     const updateInfos = [
       'IP Origem', 'IP Destino',
       'Protocolo', 'Porta de Origem',
@@ -127,12 +119,12 @@ class Rules {
         console.log('Nada selecionado.');
     }
 
-    findOne[1] = this.sourceIP;
-    findOne[2] = this.destinationIP;
-    findOne[3] = this.protocol;
-    findOne[4] = this.originPort;
-    findOne[5] = this.destinationPort;
-    findOne[6] = this.action;
+    findOne[1] = this.sourceIP ? this.sourceIP : findOne[1];
+    findOne[2] = this.destinationIP ? this.destinationIP : findOne[2];
+    findOne[3] = this.protocol ? this.protocol : findOne[3];
+    findOne[4] = this.originPort ? this.originPort : findOne[4];
+    findOne[5] = this.destinationPort ? this.destinationPort : findOne[5];
+    findOne[6] = this.action ? this.action : findOne[6];
 
     this.lines[findIndex] = findOne.join(',');
 

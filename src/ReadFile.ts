@@ -1,5 +1,5 @@
 import fs from 'fs';
-import {ISheet} from './AddRules';
+import path from 'path';
 
 class ReadFile {
   private file: string;
@@ -7,9 +7,7 @@ class ReadFile {
   private rules: number;
 
   constructor(pathFile: string) {
-    this.file = fs.readFileSync(pathFile, {
-      encoding: 'utf-8'
-    });
+    this.file = fs.readFileSync(path.join(__dirname, pathFile), 'utf-8');
     this.lines = this.file.split(/\r?\n/);
     this.rules = Number(this.lines[0]);
   }
@@ -40,11 +38,11 @@ class ReadFile {
     }
   };
 
-  comparation = (sheet: ISheet[]) => {
-    const rules = sheet.filter(rule => rule.__EMPTY >= 1);
+  comparation = (pathFile: string) => {
+    const rulesCompare = fs.readFileSync(path.join(__dirname, pathFile), { encoding: 'utf-8' });
+    const linesCompare = rulesCompare.split(/\r?\n/);
 
-    for(let line: number = 1; line <= this.rules; line++){
-
+    for(let ruleX = 1; ruleX < this.lines.length; ruleX++) {
       let sourceIP = false;
       let destinationIP = false;
       let protocol = false;
@@ -54,42 +52,48 @@ class ReadFile {
       let ruleID = 0;
       let action = '';
 
-      this.lines[line].split(',').forEach((ruleValue: String, ruleIndex: number) => {
+      this.lines[ruleX].split(',').forEach((line, lineIndex) => {
+        for(let compareX = 1; compareX < linesCompare.length; compareX++) {
 
-        for(let n = 0; n < rules.length; n++){
-          const oneRule = rules[n];
+          const lines = linesCompare[compareX].split(',');
+          for(let lineX = 0; lineX < lines.length; lineX++) {
 
-          switch(ruleIndex) {
-            case 0:
-              if(ruleValue === oneRule.IP || oneRule.IP === '*') sourceIP = true;
-              break;
-            case 1:
-              if(ruleValue === oneRule.__EMPTY_1 || oneRule.__EMPTY_1 === '*') destinationIP = true;
-              break;
-            case 2:
-              if(ruleValue === oneRule.__EMPTY_2 || oneRule.__EMPTY_2 === '*') protocol = true;
-              break;
-            case 3:
-              if(ruleValue === oneRule.Porta || oneRule.Porta === '*') originPort = true;
-              break;
-            case 4:
-              if(ruleValue === oneRule.__EMPTY_3 || oneRule.__EMPTY_3 === '*') destinationPort = true;
-              break;
-          };
+            if(lineX !== 0){
+              switch(lineIndex) {
+                case 0:
+                  if(lines[lineX] === line || line === '*') sourceIP = true;
+                  break;
+                case 1:
+                  if(lines[lineX] === line || line === '*') destinationIP = true;
+                  break;
+                case 2:
+                  if(lines[lineX] === line || line === '*') protocol = true;
+                  break;
+                case 3:
+                  if(lines[lineX] === line || line === '*') originPort = true;
+                  break;
+                case 4:
+                  if(lines[lineX] === line || line === '*') destinationPort = true;
+                  break;
+              }
+            }
+          }
 
-          if(sourceIP && destinationIP && protocol && originPort && destinationPort){
-              ruleID = Number(oneRule.__EMPTY);
-              action = oneRule.__EMPTY_4;
+          if(
+            sourceIP && destinationIP
+            && protocol && originPort && destinationPort) {
+              ruleID = Number(lines[0]);
+              action = lines[6];
               break;
           }
-        }
 
+        }
       });
 
       if(
         sourceIP && destinationIP
         && protocol && originPort && destinationPort) {
-          console.log(`Comparação valida ${ruleID} ${action}`);
+          console.log(`Comparação valida ${ruleID} - action ${action}`);
           continue;
       }else{
         console.log(`Comparação invalida`);

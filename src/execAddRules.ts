@@ -1,5 +1,4 @@
 import readline from 'readline-sync';
-import AddRules from './AddRules';
 import Rules from './Rules';
 
 let next = 's';
