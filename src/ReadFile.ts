@@ -13,9 +13,7 @@ class ReadFile {
   }
 
   read = () => {
-
     console.log(`Esse arquivo contém ${this.rules} regras`);
-
     for(let line: number = 1; line <= this.rules; line++){
       console.log('--------------------------------------');
       console.log(`Regra ${line}`);
@@ -39,9 +37,7 @@ class ReadFile {
   };
 
   comparation = (pathFile: string) => {
-
     this.read();
-
     console.log('-----------------------------------------------');
     console.log('              VERIFICANDO REGRAS               ');
     console.log('-----------------------------------------------');
@@ -71,22 +67,11 @@ class ReadFile {
         destinationPort = false;
         isValid = false;
 
-
-        if(line[0] === lineCompare[1] || all === lineCompare[1]){
-          sourceIP = true;
-        }
-        if(line[1] === lineCompare[2] || all === lineCompare[2]){
-          destinationIP = true;
-        }
-        if(line[2] === lineCompare[3] || all === lineCompare[3]){
-          protocol = true;
-        }
-        if(line[3] === lineCompare[4] || all === lineCompare[4]){
-          originPort = true;
-        }
-        if(line[4] === lineCompare[5] || all === lineCompare[5]){
-          destinationPort = true;
-        }
+        if(line[0] === lineCompare[1] || all === lineCompare[1]) sourceIP = true;
+        if(line[1] === lineCompare[2] || all === lineCompare[2]) destinationIP = true;
+        if(line[2] === lineCompare[3] || all === lineCompare[3]) protocol = true;
+        if(line[3] === lineCompare[4] || all === lineCompare[4]) originPort = true;
+        if(line[4] === lineCompare[5] || all === lineCompare[5]) destinationPort = true;
 
         if(sourceIP && destinationIP && protocol && originPort && destinationPort) {
             console.log(
@@ -97,12 +82,8 @@ class ReadFile {
         }
       }
 
-      if(!isValid) {
-          console.log(`O arquivo não foi afetado por nenhuma regra do firewall.`);
-      }
-
+      if(!isValid) console.log(`O arquivo não foi afetado por nenhuma regra do firewall.`);
     }
-
     console.log('-----------------------------------------------');
     console.log('            VERIFICAÇÃO FINALIZADA             ');
 
