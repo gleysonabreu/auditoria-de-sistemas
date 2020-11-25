@@ -36,75 +36,76 @@ class ReadFile {
         };
       });
     }
-    console.log('--------------------------------------');
   };
 
   comparation = (pathFile: string) => {
 
     this.read();
 
+    console.log('-----------------------------------------------');
+    console.log('              VERIFICANDO REGRAS               ');
+    console.log('-----------------------------------------------');
+
     const rulesCompare = fs.readFileSync(path.join(__dirname, pathFile), { encoding: 'utf-8' });
     const linesCompare = rulesCompare.split(/\r?\n/);
     const all: string = '*';
 
+    let sourceIP = false;
+    let destinationIP = false;
+    let protocol = false;
+    let originPort = false;
+    let destinationPort = false;
+    let isValid = false;
+
+
+
     for(let lineX = 1; lineX <= this.rules; lineX++) {
-      let sourceIP = false;
-      let destinationIP = false;
-      let protocol = false;
-      let originPort = false;
-      let destinationPort = false;
-
-      let ruleID = 0;
-      let action = '';
-
       const line = this.lines[lineX].split(',');
 
       for(let lineCompareX = 1; lineCompareX < linesCompare.length; lineCompareX++) {
         const lineCompare = linesCompare[lineCompareX].split(',');
+        sourceIP = false;
+        destinationIP = false;
+        protocol = false;
+        originPort = false;
+        destinationPort = false;
+        isValid = false;
 
-        if(line[0] === lineCompare[1]){
+
+        if(line[0] === lineCompare[1] || all === lineCompare[1]){
           sourceIP = true;
         }
-        if(line[1] === lineCompare[2]){
+        if(line[1] === lineCompare[2] || all === lineCompare[2]){
           destinationIP = true;
         }
-        if(line[2] === lineCompare[3]){
+        if(line[2] === lineCompare[3] || all === lineCompare[3]){
           protocol = true;
         }
-        if(line[3] === lineCompare[4]){
+        if(line[3] === lineCompare[4] || all === lineCompare[4]){
           originPort = true;
         }
-        if(line[4] === lineCompare[5]){
+        if(line[4] === lineCompare[5] || all === lineCompare[5]){
           destinationPort = true;
         }
 
-        if(
-          sourceIP && destinationIP
-          && protocol && originPort && destinationPort) {
-            ruleID = Number(lineCompare[0]);
-            action = lineCompare[6];
+        if(sourceIP && destinationIP && protocol && originPort && destinationPort) {
+            console.log(
+              `Regra encontrada no sistema, ID: ${lineCompare[0]} e a ação é: ${lineCompare[6]}`
+            );
+            isValid = true;
             break;
-        }else{
-           sourceIP = false;
-           destinationIP = false;
-           protocol = false;
-           originPort = false;
-           destinationPort = false;
         }
       }
 
-      if(
-        sourceIP && destinationIP
-        && protocol && originPort && destinationPort) {
-          console.log(
-            `Regra encontrada no sistema, ID: ${ruleID} e a ação é: ${action}`
-          );
-          continue;
-      }else{
-        console.log(`O arquivo não foi afetado por nenhuma regra do firewall.`);
+      if(!isValid) {
+          console.log(`O arquivo não foi afetado por nenhuma regra do firewall.`);
       }
 
     }
+
+    console.log('-----------------------------------------------');
+    console.log('            VERIFICAÇÃO FINALIZADA             ');
+
   }
 }
 export default ReadFile;
